@@ -4,11 +4,14 @@
 
 import os
 import json
-from loguru import logger
 from git import Repo
 import git.exc
 
 dirlist = os.listdir("./")
+
+if not os.environ.get('LOGURU_LEVEL'):
+    os.environ['LOGURU_LEVEL'] = 'INFO'
+from loguru import logger
 
 def handle_diff(repo_object, compare=None, message="Changes"):
     """ does the needful """
