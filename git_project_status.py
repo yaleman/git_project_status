@@ -4,7 +4,7 @@
 
 import os
 from git import Repo
-import git.exc
+from git.exc import InvalidGitRepositoryError
 
 dirlist = os.listdir("./")
 
@@ -15,7 +15,7 @@ if os.environ.get('LOGURU_LEVEL') == 'INFO':
     os.environ['LOGURU_FORMAT'] = '<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{message}</level>'
 
 
-from loguru import logger
+from loguru import logger #pylint: disable=wrong-import-position
 
 def handle_diff(repo_object, compare=None, message="Changes"):
     """ does the needful """
@@ -41,7 +41,7 @@ for filename in dirlist:
         logger.debug(f"Found dir: {dirpath}")
         try:
             repo = Repo(dirpath)
-        except git.exc.InvalidGitRepositoryError as error_message:
+        except InvalidGitRepositoryError as error_message:
             logger.debug(f"{dirpath} is not a repository, skipping ({error_message})")
             continue
         if repo.bare:
@@ -52,15 +52,10 @@ for filename in dirlist:
             logger.warning(f"{dirpath} ({repo.active_branch}) dirty")
             if repo.untracked_files:
                 logger.info("Untracked files:")
-                for filename in repo.untracked_files:
-                    logger.info(f"{filename}")
-            
+                for untracked_files in repo.untracked_files:
+                    logger.info(f" {untracked_files}")
+
             handle_diff(repo, compare='HEAD', message='Changes staged for commit')
             handle_diff(repo, compare=None, message='Changes not staged for commit')
 
             logger.info("")
-            
-            #logger.debug(dir(repo))
-            #for branch in repo.branches:
-             #   logger.debug(dir(branch))
-            continue
