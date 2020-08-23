@@ -1,1 +1,9 @@
-real simple, just iterates through the first-level subdirectories and does the equivalent of git status, only uglier.
+# git_project_status
+
+Real simple, just iterates through the first-level subdirectories and does the equivalent of git status, only uglier.
+
+If you want more logs, set an environment variable of `LOGURU_LOG_LEVEL=DEBUG`.
+
+Install the requirements using `pipenv install` or `pip3 -r requirements.txt`.
+
+[![Build Status](https://droneio.yaleman.org/api/badges/yaleman/git_project_status/status.svg)](https://droneio.yaleman.org/yaleman/git_project_status)
