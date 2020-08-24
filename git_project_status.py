@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-""" scans the local directory for sub-directories that have git repos in them, then does a git status on them """
+""" scans the local directory for sub-directories that have 
+	git repos in them, then does a git status on them """
 
 import os
 from git import Repo
@@ -12,7 +13,7 @@ if not os.environ.get('LOGURU_LEVEL'):
     os.environ['LOGURU_LEVEL'] = 'INFO'
 
 if os.environ.get('LOGURU_LEVEL') == 'INFO':
-    os.environ['LOGURU_FORMAT'] = '<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{message}</level>'
+    os.environ['LOGURU_FORMAT'] = '<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{message}</level>' #pylint: disable=line-too-long
 
 
 from loguru import logger #pylint: disable=wrong-import-position
