@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-""" scans the local directory for sub-directories that have 
+""" scans the local directory for sub-directories that have
 	git repos in them, then does a git status on them """
 
 import os
