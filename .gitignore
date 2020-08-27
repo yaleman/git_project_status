@@ -1,1 +1,5 @@
 .vscode/
+build/
+*.egg-info/
+dist/
+.pytest_cache/

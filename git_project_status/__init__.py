@@ -7,14 +7,11 @@ import os
 from git import Repo
 from git.exc import InvalidGitRepositoryError
 
-dirlist = os.listdir("./")
-
 if not os.environ.get('LOGURU_LEVEL'):
     os.environ['LOGURU_LEVEL'] = 'INFO'
 
 if os.environ.get('LOGURU_LEVEL') == 'INFO':
     os.environ['LOGURU_FORMAT'] = '<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{message}</level>' #pylint: disable=line-too-long
-
 
 from loguru import logger #pylint: disable=wrong-import-position
 
@@ -36,27 +33,31 @@ def handle_diff(repo_object, compare=None, message="Changes"):
                 logger.error(diff_added)
                 logger.debug(dir(diff_added))
 
-for filename in dirlist:
-    dirpath = f"./{filename}"
-    if os.path.isdir(dirpath):
-        logger.debug(f"Found dir: {dirpath}")
-        try:
-            repo = Repo(dirpath)
-        except InvalidGitRepositoryError as error_message:
-            logger.debug(f"{dirpath} is not a repository, skipping ({error_message})")
-            continue
-        if repo.bare:
-            logger.info(f"{dirpath} is bare, ignoring.")
-            continue
+def main():
+    for filename in os.listdir("./"):
+        dirpath = f"./{filename}"
+        if os.path.isdir(dirpath):
+            logger.debug(f"Found dir: {dirpath}")
+            try:
+                repo = Repo(dirpath)
+            except InvalidGitRepositoryError as error_message:
+                logger.debug(f"{dirpath} is not a repository, skipping ({error_message})")
+                continue
+            if repo.bare:
+                logger.info(f"{dirpath} is bare, ignoring.")
+                continue
 
-        if repo.is_dirty():
-            logger.warning(f"{dirpath} ({repo.active_branch}) dirty")
-            if repo.untracked_files:
-                logger.info("Untracked files:")
-                for untracked_files in repo.untracked_files:
-                    logger.info(f" {untracked_files}")
+            if repo.is_dirty():
+                logger.warning(f"{dirpath} ({repo.active_branch}) dirty")
+                if repo.untracked_files:
+                    logger.info("Untracked files:")
+                    for untracked_files in repo.untracked_files:
+                        logger.info(f" {untracked_files}")
 
-            handle_diff(repo, compare='HEAD', message='Changes staged for commit')
-            handle_diff(repo, compare=None, message='Changes not staged for commit')
+                handle_diff(repo, compare='HEAD', message='Changes staged for commit')
+                handle_diff(repo, compare=None, message='Changes not staged for commit')
 
-            logger.info("")
+                logger.info("")
+
+if __name__ == '__main__':
+    main()
