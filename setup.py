@@ -11,7 +11,7 @@ from codecs import open
 from os import path
 
 # package version
-VERSION = '0.0.4'
+VERSION = '0.0.5'
 
 here = path.abspath(path.dirname(__file__))
 
@@ -46,7 +46,7 @@ setup(
         #   3 - Alpha
         #   4 - Beta
         #   5 - Production/Stable
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
 
         # Indicate who your project is intended for
         'Intended Audience :: Developers',
