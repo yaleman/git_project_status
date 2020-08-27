@@ -10,7 +10,7 @@ steps:
   - pip install --quiet pipenv
   - pipenv install --dev
   # W0511 = TODO
-  - pipenv run pylint --disable=W0511 git_project_status.py
+  - pipenv run pylint --disable=W0511 git_project_status
 #- name: pytest
 #  image: python:3.8
 #  pull: always

@@ -11,7 +11,7 @@ from codecs import open
 from os import path
 
 # package version
-VERSION = '0.0.1'
+VERSION = '0.0.4'
 
 here = path.abspath(path.dirname(__file__))
 
@@ -63,14 +63,17 @@ setup(
     ],
 
     # What does your project relate to?
-    keywords='australia post suburb postcode ',
+    keywords='git',
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
-    #packages=find_packages(exclude=['contrib', 'docs', 'tests']),
+    packages=find_packages(exclude=['contrib',
+                                    'docs',
+                                    'tests',
+                                    ]),
 
     # Alternatively, if you want to distribute just a my_module.py, uncomment this:
-    py_modules=["git_project_status"],
+    #py_modules=["git_project_status"],
 
     # List run-time dependencies here.  These will be installed by pip when
     # your project is installed. For an analysis of "install_requires" vs pip's
