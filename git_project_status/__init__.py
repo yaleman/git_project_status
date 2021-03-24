@@ -37,28 +37,52 @@ def main():
     """ does the thing... """
     found_repo = False
     for filename in os.listdir("./"):
-        dirpath = f"./{filename}"
+        dirpath = f"{filename}"
         if os.path.isdir(dirpath):
             logger.debug(f"Found dir: {dirpath}")
             try:
                 repo = Repo(dirpath)
                 found_repo = True
             except InvalidGitRepositoryError as error_message:
-                logger.debug(f"{dirpath} is not a repository, skipping ({error_message})")
+                logger.debug("{} is not a repository, skipping ({})",
+                             dirpath,
+                             error_message,)
                 continue
             if repo.bare:
-                logger.info(f"{dirpath} is bare, ignoring.")
+                logger.info("{} is bare, ignoring.", dirpath)
                 continue
 
             if repo.is_dirty():
-                logger.warning(f"{dirpath} ({repo.active_branch}) dirty")
+                try:
+                    logger.warning("{} ({}) dirty",
+                                   dirpath,
+                                   repo.active_branch,
+                                   )
+                except TypeError as error_message:
+                    if repo.head.is_detached:
+                        logger.info("{} is detached from {}, can't process.",
+                                    dirpath,
+                                    repo.head.object,
+                                    )
+                        continue
+                    logger.error("dirpath({}) error: {}",
+                                 dirpath,
+                                 error_message,
+                                 )
+                    continue
                 if repo.untracked_files:
                     logger.info("Untracked files:")
                     for untracked_files in repo.untracked_files:
                         logger.info(f" {untracked_files}")
 
-                handle_diff(repo, compare='HEAD', message='Changes staged for commit')
-                handle_diff(repo, compare=None, message='Changes not staged for commit')
+                handle_diff(repo,
+                            compare='HEAD',
+                            message='Changes staged for commit',
+                            )
+                handle_diff(repo,
+                            compare=None,
+                            message='Changes not staged for commit',
+                            )
 
                 logger.info("")
     if not found_repo:
