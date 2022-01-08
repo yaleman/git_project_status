@@ -47,7 +47,7 @@ dev = [
 Home = "https://github.com/yaleman/git_project_status"
 
 [project.scripts]
-fuckjpeg = "git_project_status.__init__:cli"
+git_project_status = "git_project_status.__init__:cli"
 
 
 [tool.flit.sdist]

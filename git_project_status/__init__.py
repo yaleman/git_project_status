@@ -8,7 +8,7 @@ import os
 from git import Repo
 from git.exc import InvalidGitRepositoryError
 
-__version__ = '0.0.7'
+__version__ = '0.0.8'
 
 if not os.environ.get('LOGURU_LEVEL'):
     os.environ['LOGURU_LEVEL'] = 'INFO'
