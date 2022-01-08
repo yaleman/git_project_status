@@ -36,7 +36,7 @@ def handle_diff(repo_object, compare=None, message="Changes"):
                 logger.error(diff_added)
                 logger.debug(dir(diff_added))
 
-def main():
+def cli():
     """ does the thing... """
     found_repo = False
     for filename in os.listdir("./"):
@@ -90,6 +90,3 @@ def main():
                 logger.info("")
     if not found_repo:
         logger.warning("No repositories analysed?")
-
-if __name__ == '__main__':
-    main()
