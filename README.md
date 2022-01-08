@@ -8,8 +8,7 @@ Installation: `pip install git-project-status`
 
 Which will create a console script `git_project_status`.
 
-[![Build Status](https://droneio.yaleman.org/api/badges/yaleman/git_project_status/status.svg)](https://droneio.yaleman.org/yaleman/git_project_status)
-
 ## Changelog
 
  * 0.0.6 - Fixed handling detached heads.
+ * 0.0.7 - Updated build tooling.

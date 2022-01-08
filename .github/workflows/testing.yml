@@ -20,7 +20,7 @@ jobs:
         with:
           python-version: 3.8
 
-      - name: Running pylint
+      - name: Running tests
         uses: fylein/python-pylint-github-action@v4
         with:
           args: |
