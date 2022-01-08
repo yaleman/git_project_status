@@ -6,8 +6,8 @@
 
 import os
 import sys
-from git import Repo
-from git.exc import InvalidGitRepositoryError
+from git import Repo # type: ignore
+from git.exc import InvalidGitRepositoryError # type: ignore
 
 __version__ = '0.0.10'
 
@@ -37,8 +37,8 @@ def handle_diff(repo_object, compare=None, message="Changes"):
                 logger.error(diff_added)
                 logger.debug(dir(diff_added))
 
-def cli():
-    """ does the thing... """
+def get_dir_to_check():
+    """ figures out which directory we're trying to check """
     if len(sys.argv) > 1:
         dir_to_check = os.path.expanduser(sys.argv[1])
         if not os.path.exists(dir_to_check):
@@ -46,6 +46,11 @@ def cli():
             sys.exit(1)
     else:
         dir_to_check = "./"
+    return dir_to_check
+
+def cli():
+    """ does the thing... """
+    dir_to_check = get_dir_to_check()
     found_repo = False
     logger.debug("Checking {}", dir_to_check)
 
