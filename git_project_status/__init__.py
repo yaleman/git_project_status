@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 
-""" scans the local directory for sub-directories that have
+
+""" Scans the local directory for sub-directories that have
 	git repos in them, then does a git status on them """
 
 import os
 from git import Repo
 from git.exc import InvalidGitRepositoryError
+
+__version__ = '0.0.7'
 
 if not os.environ.get('LOGURU_LEVEL'):
     os.environ['LOGURU_LEVEL'] = 'INFO'

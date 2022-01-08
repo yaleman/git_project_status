@@ -1,0 +1,58 @@
+[build-system]
+requires = [
+    "flit_core >=3.2,<4"
+]
+build-backend = "flit_core.buildapi"
+
+[project]
+authors = [
+    {name = "James Hodgkinson", email = "james@terminaloutcomes.com"}
+]
+classifiers = [
+        'Development Status :: 5 - Production/Stable',
+        'Intended Audience :: Developers',
+        'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+]
+dynamic = [
+    "version",
+    "description"
+]
+
+dependencies = [
+    "GitPython",
+    "loguru",
+]
+
+keywords = [
+    "git",
+]
+name = "git_project_status"
+readme = "README.md"
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pylint",
+    "mypy",
+    "flit"
+]
+
+[project.urls]
+Home = "https://github.com/yaleman/git_project_status"
+
+[project.scripts]
+fuckjpeg = "git_project_status.__init__:cli"
+
+
+[tool.flit.sdist]
+exclude = [
+    "requirements*.txt",
+    ".gitignore",
+    ".pylintrc"
+]
