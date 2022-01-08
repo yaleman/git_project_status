@@ -54,5 +54,6 @@ fuckjpeg = "git_project_status.__init__:cli"
 exclude = [
     "requirements*.txt",
     ".gitignore",
-    ".pylintrc"
+    ".pylintrc",
+    ".github/*",
 ]
