@@ -5,10 +5,11 @@
 	git repos in them, then does a git status on them """
 
 import os
+import sys
 from git import Repo
 from git.exc import InvalidGitRepositoryError
 
-__version__ = '0.0.9'
+__version__ = '0.0.10'
 
 if not os.environ.get('LOGURU_LEVEL'):
     os.environ['LOGURU_LEVEL'] = 'INFO'
@@ -38,14 +39,22 @@ def handle_diff(repo_object, compare=None, message="Changes"):
 
 def cli():
     """ does the thing... """
+    if len(sys.argv) > 1:
+        dir_to_check = os.path.expanduser(sys.argv[1])
+        if not os.path.exists(dir_to_check):
+            logger.error("Couldn't find specified directory: {}", dir_to_check)
+            sys.exit(1)
+    else:
+        dir_to_check = "./"
     found_repo = False
-    for filename in os.listdir("./"):
-        dirpath = f"{filename}"
+    logger.debug("Checking {}", dir_to_check)
+
+    for filename in os.listdir(dir_to_check):
+        dirpath = os.path.normpath(f"{dir_to_check}/{filename}")
         if os.path.isdir(dirpath):
             logger.debug(f"Found dir: {dirpath}")
             try:
                 repo = Repo(dirpath)
-                found_repo = True
             except InvalidGitRepositoryError as error_message:
                 logger.debug("{} is not a repository, skipping ({})",
                              dirpath,
@@ -54,6 +63,7 @@ def cli():
             if repo.bare:
                 logger.info("{} is bare, ignoring.", dirpath)
                 continue
+            found_repo = True
 
             if repo.is_dirty():
                 try:
@@ -77,7 +87,6 @@ def cli():
                     logger.info("Untracked files:")
                     for untracked_files in repo.untracked_files:
                         logger.info(f" {untracked_files}")
-
                 handle_diff(repo,
                             compare='HEAD',
                             message='Changes staged for commit',
@@ -89,4 +98,4 @@ def cli():
 
                 logger.info("")
     if not found_repo:
-        logger.warning("No repositories analysed?")
+        logger.warning("No repositories analysed.")

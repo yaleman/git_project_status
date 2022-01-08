@@ -14,3 +14,4 @@ Which will create a console script `git_project_status`.
  * 0.0.7 - 2022-01-08 - Updated build tooling, broke the script name. Whoops! Pulled.
  * 0.0.8 - 2022-01-08 - Fixed the script name. Whoops! Pulled.
  * 0.0.9 - 2022-01-08 - Fixed the script config.
+ * 0.0.10 - 2022-01-08 - Added the option to specify a directory.
