@@ -1,12 +1,12 @@
-[build-system]
-requires = [
-    "flit_core >=3.2,<4"
-]
-build-backend = "flit_core.buildapi"
-
-[project]
-authors = [
-    {name = "James Hodgkinson", email = "james@terminaloutcomes.com"}
+[tool.poetry]
+name = "git_project_status"
+version = "0.0.12"
+description = "Check subdirectories for dirty repos."
+authors = ["James Hodgkinson <james@terminaloutcomes.com>"]
+license = "MIT"
+readme = "README.md"
+keywords = [
+    "git"
 ]
 classifiers = [
         'Development Status :: 5 - Production/Stable',
@@ -14,46 +14,27 @@ classifiers = [
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
 ]
-dynamic = [
-    "version",
-    "description"
-]
 
-dependencies = [
-    "GitPython",
-    "loguru",
-]
+[tool.poetry.dependencies]
+python = "^3.8"
+loguru = "^0.6.0"
+GitPython = "^3.1.27"
 
-keywords = [
-    "git",
-]
-name = "git_project_status"
-readme = "README.md"
+[tool.poetry.dev-dependencies]
+pylint = "^2.14.0"
+pytest = "^7.1.2"
+mypy = "^0.960"
+black = "^22.3.0"
 
-[project.optional-dependencies]
-dev = [
-    "pytest",
-    "pylint",
-    "mypy",
-    "flit"
-]
 
-[project.urls]
-Home = "https://github.com/yaleman/git_project_status"
-
-[project.scripts]
+[tool.poetry.scripts]
 git_project_status = "git_project_status.__main__:cli"
 
 
-[tool.flit.sdist]
-exclude = [
-    "requirements*.txt",
-    ".gitignore",
-    ".pylintrc",
-    ".github/*",
-]
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
