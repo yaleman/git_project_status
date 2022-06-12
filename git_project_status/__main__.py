@@ -61,11 +61,6 @@ def cli() -> None:
                         logger.info(f" {untracked_files}")
                 handle_diff(
                     repo,
-                    compare="HEAD",
-                    message="Changes staged for commit",
-                )
-                handle_diff(
-                    repo,
                     compare=None,
                     message="Changes not staged for commit",
                 )
