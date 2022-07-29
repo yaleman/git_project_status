@@ -28,7 +28,12 @@ def handle_diff(
     message: str="Changes",
     ) -> None:
     """ does the checking of the diffs, outputs information on what's changed """
-    if repo_object.head.commit.diff(compare):
+    try:
+        diff = repo_object.head.commit.diff(compare)
+    except ValueError as error_message:
+        logger.error("Failed to get a diff in repo {} : {}", repo_object, error_message)
+        return
+    if diff:
         logger.info(f"{message}:")
         for diff_added in repo_object.head.commit.diff(compare):
             if diff_added.renamed:
