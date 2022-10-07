@@ -7,6 +7,7 @@ git repos in them, then does a git status on them """
 import os
 from pathlib import Path
 import sys
+
 from git import Repo  # type: ignore
 
 __version__ = "0.0.11"
