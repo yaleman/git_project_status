@@ -8,7 +8,7 @@ def test_cli_runs() -> None:
     process_paths(".")
 
 
-def test_cli_working():
+def test_cli_working() -> None:
     """ tests it runs locally """
     runner = CliRunner()
     result = runner.invoke(cli, ['.'])
