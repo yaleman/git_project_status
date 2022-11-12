@@ -7,6 +7,7 @@ git repos in them, then does a git status on them """
 import os
 from pathlib import Path
 import sys
+from typing import Optional
 
 from git import Repo  # type: ignore
 
@@ -25,7 +26,7 @@ from loguru import logger  # pylint: disable=wrong-import-position
 
 def handle_diff(
     repo_object: Repo,
-    compare: Repo=None,
+    compare: Optional[Repo]=None,
     message: str="Changes",
     ) -> None:
     """ does the checking of the diffs, outputs information on what's changed """
