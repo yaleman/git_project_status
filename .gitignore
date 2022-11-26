@@ -5,3 +5,4 @@ dist/
 .pytest_cache/
 **/__pycache__/*
 venv/
+poetry.lock
