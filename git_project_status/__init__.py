@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 
 
-""" Scans the local directory for sub-directories that have
-git repos in them, then does a git status on them """
+"""Scans the local directory for sub-directories that have
+git repos in them, then does a git status on them"""
 
 import os
 from pathlib import Path
 import sys
 from typing import Optional
 
-from git import Repo  # type: ignore
+from git import Commit, Repo
 
 __version__ = "0.0.11"
 
@@ -17,28 +17,28 @@ if not os.environ.get("LOGURU_LEVEL"):
     os.environ["LOGURU_LEVEL"] = "INFO"
 
 if os.environ.get("LOGURU_LEVEL") == "INFO":
-    os.environ[
-        "LOGURU_FORMAT"
-    ] = "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{message}</level>"  # pylint: disable=line-too-long
+    os.environ["LOGURU_FORMAT"] = (
+        "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{message}</level>"  # pylint: disable=line-too-long
+    )
 
 from loguru import logger  # pylint: disable=wrong-import-position
 
 
 def handle_diff(
     repo_object: Repo,
-    compare: Optional[Repo]=None,
-    message: str="Changes",
-    ) -> None:
-    """ does the checking of the diffs, outputs information on what's changed """
+    compare: Optional[Commit] = None,
+    message: str = "Changes",
+) -> None:
+    """does the checking of the diffs, outputs information on what's changed"""
     try:
-        diff = repo_object.head.commit.diff(compare)
+        diff = repo_object.head.commit.diff(other=compare)
     except ValueError as error_message:
         logger.error("Failed to get a diff in repo {} : {}", repo_object, error_message)
         return
     if diff:
         logger.info(f"{message}:")
-        for diff_added in repo_object.head.commit.diff(compare):
-            if diff_added.renamed:
+        for diff_added in repo_object.head.commit.diff(other=compare):
+            if diff_added.renamed_file:
                 logger.info(
                     "renamed : {} -> {}", diff_added.rename_from, diff_added.rename_to
                 )
@@ -55,7 +55,7 @@ def handle_diff(
 
 
 def get_dir_to_check() -> Path:
-    """ figures out which directory we're trying to check """
+    """figures out which directory we're trying to check"""
     if len(sys.argv) > 1:
         dir_to_check = Path(os.path.expanduser(sys.argv[1]))
         if not dir_to_check.exists():

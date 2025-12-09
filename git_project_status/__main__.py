@@ -1,4 +1,4 @@
-""" cli interface """
+"""cli interface"""
 
 import os
 import sys
