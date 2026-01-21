@@ -6,6 +6,7 @@ help:
 check: fmt lint type test
 
 type:
+    uv run ty check
     uv run mypy --strict $(basename $(pwd)) tests
 
 lint:

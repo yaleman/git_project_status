@@ -25,7 +25,12 @@ classifiers = [
 git_project_status = "git_project_status.__main__:cli"
 
 [dependency-groups]
-dev = ["pytest", "mypy", "ruff>=0.14.8"]
+dev = [
+    "pytest",
+    "mypy",
+    "ruff>=0.14.8",
+    "ty>=0.0.12",
+]
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

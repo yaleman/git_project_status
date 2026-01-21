@@ -1,5 +1,5 @@
 ---
-name: mypy
+name: Linting
 
 "on":
   push:
@@ -17,6 +17,7 @@ jobs:
         with:
           activate-environment: "true"
           github-token: ${{ github.token }}
-      - name: Running mypy
+      - name: Running typing checks
         run: |
+          uv run ty check
           uv run mypy $(basename $(pwd) | sed -E 's/-/_/g') tests/
