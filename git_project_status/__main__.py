@@ -29,6 +29,13 @@ def process_paths(path: str, short: bool) -> None:
                     error_message,
                 )
                 continue
+            except AttributeError as error_message:
+                logger.error(
+                    "{} AttributeError, skipping ({})",
+                    dirpath,
+                    error_message,
+                )
+                continue
             if repo.bare:
                 logger.debug("{} is bare, ignoring.", dirpath)
                 continue
