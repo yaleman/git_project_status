@@ -12,6 +12,7 @@ Which will create a console script `git_project_status`.
 
 ## Changelog
 
+ * 0.1.0 - Added local ahead-of-upstream commit detection for first-level repos.
  * 0.0.6 - Fixed handling detached heads.
  * 0.0.7 - 2022-01-08 - Updated build tooling, broke the script name. Whoops! Pulled.
  * 0.0.8 - 2022-01-08 - Fixed the script name. Whoops! Pulled.
