@@ -12,7 +12,7 @@ from typing import Optional
 from git import Commit, Repo
 from git.exc import GitCommandError
 
-__version__ = "0.0.11"
+__version__ = "0.1.0"
 
 if not os.environ.get("LOGURU_LEVEL"):
     os.environ["LOGURU_LEVEL"] = "INFO"
