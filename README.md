@@ -1,6 +1,8 @@
 # git_project_status
 
-Real simple, just iterates through the first-level subdirectories and does the equivalent of git status, only uglier.
+Real simple, just iterates through the first-level subdirectories and does the
+equivalent of git status, plus checks for local commits that are ahead of their
+upstream branch.
 
 If you want more logs, set an environment variable of `LOGURU_LOG_LEVEL=DEBUG`.
 

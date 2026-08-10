@@ -8,7 +8,7 @@ import click
 from git import Repo
 from git.exc import InvalidGitRepositoryError
 
-from . import handle_diff
+from . import count_unpushed_commits, handle_diff
 
 
 def process_paths(path: str, short: bool) -> None:
@@ -40,6 +40,14 @@ def process_paths(path: str, short: bool) -> None:
                 logger.debug("{} is bare, ignoring.", dirpath)
                 continue
             found_repo = True
+
+            unpushed = count_unpushed_commits(repo)
+            if unpushed is not None and unpushed > 0:
+                logger.warning(
+                    "{} has {} commit(s) not pushed to upstream",
+                    dirpath,
+                    unpushed,
+                )
 
             if repo.is_dirty():
                 try:

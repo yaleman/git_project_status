@@ -10,6 +10,7 @@ import sys
 from typing import Optional
 
 from git import Commit, Repo
+from git.exc import GitCommandError
 
 __version__ = "0.0.11"
 
@@ -52,6 +53,43 @@ def handle_diff(
                 logger.error("Unknown change type: '{}'", diff_added.change_type)
                 logger.error(diff_added)
                 logger.debug(dir(diff_added))
+
+
+def count_unpushed_commits(repo_object: Repo) -> Optional[int]:
+    """Returns the number of local commits that are not yet pushed to upstream.
+
+    Returns None when upstream state cannot be determined, for example when HEAD
+    is detached or tracking isn't configured.
+    """
+    try:
+        active_branch = repo_object.active_branch
+    except TypeError as error_message:
+        logger.debug(
+            "{} has detached head, cannot compute upstream status: {}",
+            repo_object.working_tree_dir,
+            error_message,
+        )
+        return None
+
+    tracking_branch_source = active_branch.tracking_branch
+    if callable(tracking_branch_source):
+        tracking_branch = tracking_branch_source()
+    else:
+        tracking_branch = tracking_branch_source
+    if tracking_branch is None:
+        return None
+
+    try:
+        return sum(
+            1 for _ in repo_object.iter_commits(f"{tracking_branch}..{active_branch}")
+        )
+    except (GitCommandError, ValueError) as error_message:
+        logger.debug(
+            "Failed to compare commits for {}: {}",
+            repo_object.working_tree_dir,
+            error_message,
+        )
+        return None
 
 
 def get_dir_to_check() -> Path:
